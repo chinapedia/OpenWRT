@@ -1,0 +1,61 @@
+#!/bin/sh
+
+Z_Time(){
+    seconds_left=$Z_Times
+    while [ $seconds_left -gt 0 ];do
+      echo -n $seconds_left
+      sleep 1
+      seconds_left=$(($seconds_left - 1))
+      echo -ne "\r     \r"
+    done
+}
+
+cd /tmp
+IP=`ifconfig | awk '/inet addr:/{print $2}'| sed -n '1p;1q' | cut -c 6-`
+Z_MD5="733B6977EE83B529B733DF199B7CD2FE"
+clear
+echo "Newifi 3 刷Breed"
+echo "Shell Copyright Zy143L"
+echo "Breed Copyright Hackpascal"
+echo
+echo -e "\033[31m警告! 请不要乱敲回车! 否则后果自负! 有问题请按Ctrl+C \033[0m"
+echo "回车继续"
+read
+echo "正在判断eeprom分区..";sleep 1;echo
+Z_eeprom=`cat /proc/mtd | grep Factory | cut -b 1-4`
+echo "开始备份eeprom";echo
+dd if=/dev/${Z_eeprom} of=/tmp/eeprom.bin >/dev/null 2>&1
+echo "EEPROM备份完成...";echo;sleep 1
+ln -s /tmp/eeprom.bin /www/eeprom.bin >/dev/null 2>&1
+echo "请下载EEPROM备份文件";echo
+echo "请打开浏览器 输入 http://${IP}/eeprom.bin";echo
+echo -e "\033[31m一定要记得下载！ \033[0m"
+echo -e "\033[32m给你20秒下载时间\033[0m"
+Z_Times="20"
+Z_Time
+echo "如果你下载完成 请回车"
+read
+rm -rf /tmp/*.ko
+echo "下载解锁文件...如果过了很久很久没有反应 说明你那边网络不好";echo
+wget --no-check-certificate https://gitee.com/zy143l/OpenWRT/raw/master/shizuku.ko >/dev/null 2>&1
+
+while true
+	do
+	MD5=`md5sum 2.ko | cut -d ' ' -f1`
+	if [ ${Z_MD5} != ${MD5} ];then
+		echo "解锁文件校验失败..正在重试";echo
+		rm -rf 2.ko
+		echo "重新下载解锁文件...";echo
+		wget --no-check-certificate https://gitee.com/zy143l/OpenWRT/raw/master/shizuku.ko >/dev/null 2>&1
+	else
+	echo "解锁文件校验正确 MD5: ${MD5}"
+		chmod 0777 2.ko
+		break
+	fi
+done
+echo "一切准备就绪 3秒后回车刷入Breed"
+echo "Tips : 刷入完成后会重启机器 请拔电源! 手动按住Reset键进入Breed!"
+Z_Times="3"
+Z_Time
+read
+insmod 2.ko
