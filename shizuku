@@ -1,5 +1,5 @@
 #!/bin/sh
-
+rm -rf $0
 Z_Time(){
     seconds_left=$Z_Times
     while [ $seconds_left -gt 0 ];do
