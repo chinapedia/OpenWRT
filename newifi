@@ -1,0 +1,7 @@
+#!/bin/sh
+echo "新三刷Breed"
+echo "回车继续"
+read
+wget https://gitee.com/zy143l/OpenWRT/raw/master/2.ko
+echo "成功 开启重启 请自行按压Reset键进入Breed"
+insmod 2.ko
