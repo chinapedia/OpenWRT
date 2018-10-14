@@ -18,7 +18,7 @@ echo "Newifi 3 刷Breed"
 echo "Shell Copyright Zy143L"
 echo "Breed Copyright Hackpascal"
 echo
-echo -e "\033[31m警告! 请不要乱敲回车! 否则后果自负! 有问题请按Ctrl+C \033[0m"
+echo -e "\033[31m警告! 请不要乱敲回车! 否则后果自负! 有问题请关闭程序 \033[0m"
 echo "回车继续"
 read
 echo "正在判断eeprom分区..";sleep 1;echo
@@ -41,15 +41,15 @@ wget --no-check-certificate https://gitee.com/zy143l/OpenWRT/raw/master/shizuku.
 
 while true
 	do
-	MD5=`md5sum 2.ko | cut -d ' ' -f1`
+	MD5=`md5sum shizuku.ko | cut -d ' ' -f1`
 	if [ ${Z_MD5} != ${MD5} ];then
 		echo "解锁文件校验失败..正在重试";echo
-		rm -rf 2.ko
+		rm -rf shizuku.ko
 		echo "重新下载解锁文件...";echo
 		wget --no-check-certificate https://gitee.com/zy143l/OpenWRT/raw/master/shizuku.ko >/dev/null 2>&1
 	else
 	echo "解锁文件校验正确 MD5: ${MD5}"
-		chmod 0777 2.ko
+		chmod 0777 shizuku.ko
 		break
 	fi
 done
@@ -58,4 +58,4 @@ echo "Tips : 刷入完成后会重启机器 请拔电源! 手动按住Reset键�
 Z_Times="3"
 Z_Time
 read
-insmod 2.ko
+insmod shizuku.ko
