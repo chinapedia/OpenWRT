@@ -18,7 +18,7 @@ echo "Newifi 3 刷Breed"
 echo "Shell Copyright Zy143L"
 echo "Breed Copyright Hackpascal"
 echo
-echo -e "\033[31m警告! 请不要乱敲回车! 否则后果自负! 有问题请关闭程序 \033[0m"
+echo "警告! 请不要乱敲回车! 否则后果自负! 有问题请关闭程序"
 echo "回车继续"
 read
 echo "正在判断eeprom分区..";sleep 1;echo
@@ -29,8 +29,8 @@ echo "EEPROM备份完成...";echo;sleep 1
 ln -s /tmp/eeprom.bin /www/eeprom.bin >/dev/null 2>&1
 echo "请下载EEPROM备份文件";echo
 echo "请打开浏览器 输入 http://${IP}/eeprom.bin";echo
-echo -e "\033[31m一定要记得下载！ \033[0m"
-echo -e "\033[32m给你20秒下载时间\033[0m"
+echo "一定要记得下载! "
+echo "给你20秒下载时间"
 Z_Times="20"
 Z_Time
 echo "如果你下载完成 请回车"
@@ -53,9 +53,7 @@ while true
 		break
 	fi
 done
-echo "一切准备就绪 3秒后回车刷入Breed"
+echo "一切准备就绪 回车刷入Breed"
 echo "Tips : 刷入完成后会重启机器 请拔电源! 手动按住Reset键进入Breed!"
-Z_Times="3"
-Z_Time
 read
 insmod shizuku.ko
