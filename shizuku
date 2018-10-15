@@ -13,7 +13,7 @@ Z_Time(){
 cd /tmp
 IP=`ifconfig | awk '/inet addr:/{print $2}'| sed -n '1p;1q' | cut -c 6-`
 Z_MD5="733b6977ee83b529b733df199b7cd2fe"
-echo;ehco;echo;echo;echo
+echo;echco;echo;echo;echo;echco;echo;echo;echo
 echo "Newifi 3 刷Breed"
 echo "Shell Copyright Zy143L"
 echo "Breed Copyright Hackpascal"
