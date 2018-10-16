@@ -1,0 +1,3 @@
+Z_eeprom=`cat /proc/mtd | grep Factory | cut -b 1-4`
+dd if=/dev/${Z_eeprom} of=/tmp/eeprom.bin >/dev/null 2>&1
+ln -s /tmp/eeprom.bin /www/eeprom.bin >/dev/null 2>&1
